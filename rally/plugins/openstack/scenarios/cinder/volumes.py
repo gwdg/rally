@@ -328,7 +328,7 @@ class CinderVolumes(cinder_utils.CinderScenario,
 
         """Create volume, snapshot and attach/detach volume.
 
-        This scenario is based on the standalone qaStressTest.py
+        This scenario is based off of the standalone qaStressTest.py
         (https://github.com/WaltHP/cinder-stress).
 
         :param volume_type: Whether or not to specify volume type when creating
@@ -350,8 +350,11 @@ class CinderVolumes(cinder_utils.CinderScenario,
             for s in volume_types_list:
                 volume_types.append(s.name)
             selected_type = random.choice(volume_types)
+            volume = self._create_volume(size, volume_type=selected_type)
+        else:
+            volume = random.choice(self.context["tenant"]["volumes"])
+            volume = self.clients("cinder").volumes.get(volume["id"])
 
-        volume = self._create_volume(size, volume_type=selected_type)
         snapshot = self._create_snapshot(volume.id, False, **kwargs)
 
         server = self.get_random_server()
