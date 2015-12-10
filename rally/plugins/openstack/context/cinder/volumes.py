@@ -56,7 +56,7 @@ class VolumeGenerator(context.Context):
     def setup(self):
         size = self.config["size"]
         volumes_per_tenant = self.config["volumes_per_tenant"]
-        volume_type = self.config["volume_type"]
+        volume_type = self.config.get("volume_type")
 
         for user, tenant_id in rutils.iterate_per_tenants(
                 self.context["users"]):
