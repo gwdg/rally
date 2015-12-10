@@ -61,6 +61,8 @@ class VolumeGenerator(context.Context):
         for user, tenant_id in rutils.iterate_per_tenants(
                 self.context["users"]):
             self.context["tenants"][tenant_id].setdefault("volumes", [])
+            self.context["tenants"][tenant_id]["volume_type"] = volume_type
+
             cinder_util = cinder_utils.CinderScenario(
                 {"user": user,
                  "task": self.context["task"]})

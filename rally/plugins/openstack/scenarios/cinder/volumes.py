@@ -395,7 +395,7 @@ class CinderVolumes(cinder_utils.CinderScenario,
         #       size in _create_volume method.
         size = random.randint(size["min"], size["max"])
 
-        source_vol = self._create_volume(size)
+        source_vol = self._create_volume(size, volume_type=self.context["tenant"].get("volume_type"))
         nes_objs = [(self.get_random_server(), source_vol,
                      self._create_snapshot(source_vol.id, False, **kwargs))]
 
